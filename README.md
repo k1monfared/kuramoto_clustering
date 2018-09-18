@@ -68,3 +68,18 @@ permute and plot the final result:
 <img src="/outputs_2018_9_18_14_27_15_fig_5.png" width="900">
 
 Here the model found the clusters exactly as they were seen in the original network.
+
+
+
+Same thing can be done for a weighted network, for example, one that is generated from a correlation matrix
+
+    n = 10; % number of oscillators
+    A = 2 * rand(n,n) - 1; % creat a random matrix between -1 and 1
+    A = (A + A') / 2; % symmetrize it
+    A = A - diag(diag(A)) + eye(n); % make diagonal entries equal to 1
+                                    % this will immitate a correlation matrix
+
+    run_kuramoto_cluster(A)
+    
+<img src="/fig5_clusters.png" width="900">
+    
