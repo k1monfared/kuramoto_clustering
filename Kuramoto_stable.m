@@ -1,19 +1,10 @@
-function [I, V, R, Y0, Yn] = Kuramoto_stable(adj_matrix,tmax,coupling,m,tol,imax)
+function [I, V, R, Y0, Yn] = Kuramoto_stable(adj_matrix,tmax,coupling,m,tol,imax,verbose)
     % outputs: 
     %   I: times for convergence for each initialization
+    %   V: order vectors for each initialization
     %   R: order parameter after convergence for each initialization
     %   Y0: all initializations 
     %   Yn: final phases
-    %   
-    %
-    % Program to integrate the Kuramoto model 
-    % 
-    % load the adjacency matrix first to ensure that the non-zero edges are
-    % used for the synchronization studies
-    %
-    % Nosc = Number of oscillators
-    % tmax = 10000;    % original
-    % imax = 1000; %average over imax iterations
     %
     % Other modules use:
     %   Nkuramoto.m
@@ -23,16 +14,19 @@ function [I, V, R, Y0, Yn] = Kuramoto_stable(adj_matrix,tmax,coupling,m,tol,imax
     %
     % Credit: Keivan Hassani Monfared, k1monfared@gmail.com
     
-    if nargin < 6
-        imax = 100;
-        if nargin < 5
-            tol = 10^(-5);
-            if nargin < 4
-                m = 1000;
-                if nargin < 3
-                    coupling = 0.10;
-                    if nargin < 2
-                        tmax = 10000;
+    if nargin < 7
+        verbose = 0;
+        if nargin < 6
+            imax = 100;
+            if nargin < 5
+                tol = 10^(-5);
+                if nargin < 4
+                    m = 1000;
+                    if nargin < 3
+                        coupling = 0.10;
+                        if nargin < 2
+                            tmax = 10000;
+                        end
                     end
                 end
             end
@@ -80,5 +74,8 @@ function [I, V, R, Y0, Yn] = Kuramoto_stable(adj_matrix,tmax,coupling,m,tol,imax
         Y0 = [ Y0, canonical_polar(ystart) ];
         Yn = [ Yn, canonical_polar(y(idx,:)') ];
         
+        if verbose
+            fprintf('Kuramoto runs completed: %2.2f%% \n', i/imax*100);
+        end
     end
 end

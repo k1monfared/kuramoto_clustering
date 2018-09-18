@@ -6,6 +6,7 @@ function idx = elbow(D,plot_flag)
     %         clusters.
     %
     % Credit: Keivan Hassani Monfared, k1monfared@gmail.com
+    
     if nargin < 2
         plot_flag = 0;
     end
